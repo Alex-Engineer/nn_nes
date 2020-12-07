@@ -8,16 +8,16 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+#todo add train/test dataloaders (if we don't know y for test dataset)
 class Circles(Dataset):
     """
     Circles dataset
     """
-
     def __init__(self, n_samples, noise=None, shuffle=True, random_state=0, factor=0.8):
         self.X, self.y = datasets.make_circles(n_samples=n_samples, shuffle=shuffle, noise=noise,
                                                random_state=random_state,
                                                factor=factor)
+        self.X , self.y =  self.X.astype(np.float32), self.y.astype(np.int)
 
     def __len__(self):
         return self.X.shape[0]
