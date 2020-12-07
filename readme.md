@@ -31,3 +31,5 @@
     * Discretize output
     * loss plots 
     * tensorboard
+    
+5) Add gpu support
