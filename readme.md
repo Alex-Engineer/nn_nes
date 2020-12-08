@@ -12,11 +12,12 @@
 1) Data
     * 4 types of random data
     * Dataset and dataloader
+    * add data preprocessing (StandardScaler())
     * train/test split
     * add additional features
     
 2) NN architecture
-    * classification  (regression)
+    * classification  (**regression)
     * n of hidden layers and neurons; activations 
     * output 
     
@@ -24,11 +25,14 @@
     * loss function
     * optimizer 
     * n of epochs 
+    * calculate metrics
+    * save every epoch
+    * load from saved
     
 4) Visualization 
     * plot data
     * show train/test data 
-    * Discretize output
+    * discretize output
     * loss plots 
     * tensorboard
     

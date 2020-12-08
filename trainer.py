@@ -19,7 +19,7 @@ class NetTrainer():
         cuda = torch.cuda.is_available()
         self.device = torch.device("cuda" if cuda else "cpu")
 
-    #todo add validation after each z epochs
+    # todo add validation after each z epochs
     def fit(self, train_dataloader, n_epochs):
         start_time = time.time()
         running_loss = 0
@@ -63,7 +63,6 @@ class NetTrainer():
         all_outputs = torch.tensor([], device=self.device)
         with torch.no_grad():
             self.model.eval()
-
             for batch_idx, (data, target) in enumerate(dataloader):
                 print(batch_idx)
                 data = data.to(self.device)
@@ -71,6 +70,16 @@ class NetTrainer():
                 outputs = self.model(data)
                 all_outputs = torch.cat((all_outputs, outputs), 0)
         return all_outputs
+
+    def calculate_metrics(self, y_true, y_predict, list_of_metrics):
+        """
+        рассчет метрик для предсказанных классов и для вероятностей
+        :param y_true:
+        :param y_predict:
+        :param list_of_metrics:
+        :return:
+        """
+        pass
 
 
 if __name__ == "__main__":
@@ -95,3 +104,6 @@ if __name__ == "__main__":
     prediction_proba = trainer.predict_proba(test_dataloader)
     print(prediction_proba)
     print(prediction_proba.size())
+
+
+
