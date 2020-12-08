@@ -4,8 +4,7 @@
 
 # conda install numpy scipy pandas matplotlib scikit-learn  seaborn jupyter -y 
 # conda install  pytorch torchvision torchaudio -c pytorch -y
-
-
+# conda install tensorboard
 
 # architecture
 
@@ -37,3 +36,8 @@
     * tensorboard
     
 5) Add gpu support
+
+
+
+Run tensorboard 
+tensorboard --logdir runs

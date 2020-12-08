@@ -5,6 +5,8 @@ from net import SimpleNN
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import datetime
+from torch.utils.tensorboard import SummaryWriter
 
 
 class NetTrainer():
@@ -19,6 +21,13 @@ class NetTrainer():
         cuda = torch.cuda.is_available()
         self.device = torch.device("cuda" if cuda else "cpu")
 
+        # будем называть эксперимент по времени его старта
+        self.experiment_name = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        # todo make dirs for logs
+        self.writer = SummaryWriter('runs/' + self.experiment_name)
+
+
+
     # todo add validation after each z epochs
     def fit(self, train_dataloader, n_epochs):
         start_time = time.time()
@@ -28,6 +37,10 @@ class NetTrainer():
                 self.optimizer.zero_grad()  # .backward() accumulates gradients
                 data = data.to(self.device)
                 target = target.to(self.device)  # all data & model on same device
+
+                #look at graph
+                if (i ==0) and (batch_idx==0):
+                    self.writer.add_graph(self.model, data)
 
                 outputs = self.model(data)
                 loss = self.criterion(outputs, target)
@@ -39,8 +52,13 @@ class NetTrainer():
 
             end_time = time.time()
             running_loss /= len(train_dataloader)
+            self.writer.add_scalar('training loss', running_loss)
+
             print('Training Loss: ', running_loss, 'Time: ', end_time - start_time, 's')
-        print("End epoch: ", (i + 1))
+            # calculate metrics
+            print("End epoch: ", (i + 1))
+
+            # plot predictions and save results
 
     def predict(self, dataloader):
         all_outputs = torch.tensor([], device=self.device, dtype=torch.long)
@@ -56,7 +74,6 @@ class NetTrainer():
                 _, predicted = torch.max(outputs.data, 1)
                 print("predicted", predicted)
                 all_outputs = torch.cat((all_outputs, predicted), 0)
-
         return all_outputs
 
     def predict_proba(self, dataloader):
@@ -71,15 +88,15 @@ class NetTrainer():
                 all_outputs = torch.cat((all_outputs, outputs), 0)
         return all_outputs
 
-    def calculate_metrics(self, y_true, y_predict, list_of_metrics):
-        """
-        рассчет метрик для предсказанных классов и для вероятностей
-        :param y_true:
-        :param y_predict:
-        :param list_of_metrics:
-        :return:
-        """
-        pass
+    # def calculate_metrics(self, y_true, y_predict, list_of_metrics):
+    #     """
+    #     рассчет метрик для предсказанных классов и для вероятностей
+    #     :param y_true:
+    #     :param y_predict:
+    #     :param list_of_metrics:
+    #     :return:
+    #     """
+    #     pass
 
 
 if __name__ == "__main__":
@@ -94,8 +111,9 @@ if __name__ == "__main__":
     test_dataloader = DataLoader(test_dataset, batch_size=100, shuffle=False)
 
     trainer = NetTrainer(net)
+    print(trainer.experiment_name)
 
-    trainer.fit(train_dataloader, 10)
+    trainer.fit(train_dataloader, 100)
 
     prediction = trainer.predict(test_dataloader)
     print(prediction)
@@ -104,6 +122,3 @@ if __name__ == "__main__":
     prediction_proba = trainer.predict_proba(test_dataloader)
     print(prediction_proba)
     print(prediction_proba.size())
-
-
-
