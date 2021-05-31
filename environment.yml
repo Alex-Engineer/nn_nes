@@ -1,0 +1,22 @@
+name: playground_nn
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.7
+  - scikit-learn
+  - pandas
+  - jupyter
+  - seaborn
+  - numpy
+  - matplotlib
+  - scipy
+  - pytorch
+  - torchvision
+  - torchaudio
+  - nltk
+  - torchtext
+  - spacy
+  - tensorboard
+prefix: /Users/aleksandrzverkov/anaconda3/envs/playground_nn
+

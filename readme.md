@@ -1,12 +1,14 @@
-# conda environment
-# git init 
+### git init 
+
+### conda packages
+conda install numpy scipy pandas matplotlib scikit-learn  seaborn jupyter -y 
+conda install  pytorch torchvision torchaudio -c pytorch -y
+conda install tensorboard
 
 
-# conda install numpy scipy pandas matplotlib scikit-learn  seaborn jupyter -y 
-# conda install  pytorch torchvision torchaudio -c pytorch -y
-# conda install tensorboard
+If you want to make your environment file work across platforms, you can use the conda env export --from-history 
 
-# architecture
+# Что еще можно сделать
 
 1) Data
     * 4 types of random data

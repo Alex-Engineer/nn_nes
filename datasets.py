@@ -33,9 +33,9 @@ class Circles(Dataset):
 
 if __name__ == "__main__":
     circles_dataset = Circles(5000, noise=0.05)
-    print(circles_dataset.X)
-    print(len(circles_dataset))
-    print(circles_dataset[0])
+    # print(circles_dataset.X)
+    # print(len(circles_dataset))
+    # print(circles_dataset[0])
     circles_dataset.plot_data()
 
     train_dataset = Circles(15, noise=0.05, random_state=0)
@@ -43,5 +43,5 @@ if __name__ == "__main__":
 
     train_dataloader = DataLoader(train_dataset, batch_size=5, shuffle=True)
     test_dataloader = DataLoader(test_dataset, batch_size=5, shuffle=False)
-    for x, y in train_dataloader:
-        print(x, y)
+    # for x, y in train_dataloader:
+    #     print(x, y)
